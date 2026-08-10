@@ -148,14 +148,14 @@ onMounted(() => {
       {{ label }}
     </label>
     <div
-      class="flex flex-col gap-2 px-3 pt-3 pb-3 transition-all duration-500 ease-in-out border rounded-lg bg-n-alpha-black2"
+      class="flex flex-col gap-2 px-3 pt-3 pb-3 transition-colors duration-200 border rounded-md bg-n-background shadow-sm"
       :class="[
         customTextAreaWrapperClass,
         {
           'cursor-not-allowed opacity-50 !bg-n-alpha-black2 disabled:border-n-weak dark:disabled:border-n-weak':
             disabled,
-          'border-n-brand dark:border-n-brand': isFocused,
-          'hover:border-n-slate-6 dark:hover:border-n-slate-6 border-n-weak dark:border-n-weak':
+          'border-n-ring ring-1 ring-n-ring': isFocused,
+          'hover:border-n-ring/60 border-n-input':
             !isFocused && messageType !== 'error',
           'border-n-ruby-8 dark:border-n-ruby-8 hover:border-n-ruby-9 dark:hover:border-n-ruby-9':
             messageType === 'error' && !isFocused,
@@ -181,7 +181,7 @@ onMounted(() => {
         }"
         :disabled="disabled"
         rows="1"
-        class="flex w-full reset-base text-sm p-0 !rounded-none !bg-transparent dark:!bg-transparent !border-0 !outline-0 !mb-0 placeholder:text-n-slate-10 dark:placeholder:text-n-slate-10 text-n-slate-12 dark:text-n-slate-12 disabled:cursor-not-allowed disabled:opacity-50"
+        class="flex w-full reset-base text-sm p-0 !rounded-none !bg-transparent !border-0 !outline-0 !mb-0 placeholder:text-n-muted-foreground text-n-foreground disabled:cursor-not-allowed disabled:opacity-50"
         @input="handleInput"
         @focus="handleFocus"
         @blur="handleBlur"

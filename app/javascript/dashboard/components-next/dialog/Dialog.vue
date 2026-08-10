@@ -118,7 +118,7 @@ defineExpose({ open, close });
   <TeleportWithDirection to="body">
     <dialog
       ref="dialogRef"
-      class="w-full transition-all duration-300 ease-in-out shadow-xl rounded-xl"
+      class="w-full transition-all duration-200 shadow-lg rounded-lg bg-transparent"
       :class="[
         maxWidthClass,
         positionClass,
@@ -129,16 +129,19 @@ defineExpose({ open, close });
       <OnClickOutside @trigger="handleClickOutside">
         <form
           ref="dialogContentRef"
-          class="flex flex-col w-full h-auto gap-6 p-6 overflow-visible text-start align-middle transition-all duration-300 ease-in-out transform bg-n-alpha-3 backdrop-blur-[100px] shadow-xl rounded-xl"
+          class="flex flex-col w-full h-auto gap-6 p-6 overflow-visible text-start align-middle border border-n-border bg-n-popover text-n-popover-foreground shadow-lg rounded-lg"
           @submit.prevent="confirm"
           @click.stop
         >
           <div v-if="title || description" class="flex flex-col gap-2">
-            <h3 class="text-base font-medium leading-6 text-n-slate-12">
+            <h3 class="text-lg font-semibold leading-none text-n-foreground">
               {{ title }}
             </h3>
             <slot name="description">
-              <p v-if="description" class="mb-0 text-sm text-n-slate-11">
+              <p
+                v-if="description"
+                class="mb-0 text-sm text-n-muted-foreground"
+              >
                 {{ description }}
               </p>
             </slot>
