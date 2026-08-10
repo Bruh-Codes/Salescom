@@ -101,13 +101,14 @@ const STYLE_CONFIG = {
   colors: {
     blue: {
       solid:
-        'bg-n-brand text-white hover:enabled:brightness-110 focus-visible:brightness-110 outline-transparent',
+        'bg-n-primary text-n-primary-foreground hover:enabled:bg-n-primary/90 outline-transparent',
       faded:
-        'bg-n-brand/10 text-n-blue-11 hover:enabled:bg-n-brand/20 focus-visible:bg-n-brand/20 outline-transparent',
-      outline: 'text-n-blue-11 outline-n-brand',
+        'bg-n-accent text-n-accent-foreground hover:enabled:bg-n-accent/80 outline-transparent',
+      outline:
+        'bg-n-background text-n-foreground outline-n-input hover:enabled:bg-n-accent hover:enabled:text-n-accent-foreground',
       ghost:
-        'text-n-blue-11 hover:enabled:bg-n-alpha-2 focus-visible:bg-n-alpha-2 outline-transparent',
-      link: 'text-n-blue-11 hover:enabled:underline focus-visible:underline outline-transparent',
+        'text-n-foreground hover:enabled:bg-n-accent hover:enabled:text-n-accent-foreground outline-transparent',
+      link: 'text-n-primary hover:enabled:underline focus-visible:underline outline-transparent',
     },
     ruby: {
       solid:
@@ -191,7 +192,7 @@ const STYLE_CONFIG = {
     center: 'justify-center',
     end: 'justify-end',
   },
-  base: 'inline-flex items-center min-w-0 gap-2 transition-all duration-100 ease-out border-0 rounded-lg outline-1 outline disabled:opacity-50',
+  base: 'inline-flex items-center min-w-0 gap-2 whitespace-nowrap transition-colors duration-200 border-0 rounded-md outline outline-1 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-n-ring focus-visible:outline-offset-2',
 };
 
 const variantClasses = computed(() => {
