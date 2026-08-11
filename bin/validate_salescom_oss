@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ -d enterprise || -d spec/enterprise ]]; then
+  echo 'Enterprise directories must not exist in the Salescom repository.' >&2
+  exit 1
+fi
+
+if rg -n 'Enterprise::|api/enterprise' app config lib; then
+  echo 'Enterprise runtime references must not exist in Salescom application code.' >&2
+  exit 1
+fi
+
+echo 'Salescom MIT-only boundary verified.'
