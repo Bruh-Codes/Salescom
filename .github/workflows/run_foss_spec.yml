@@ -118,10 +118,8 @@ jobs:
       - name: Install pnpm dependencies
         run: pnpm i
 
-      - name: Strip enterprise code
-        run: |
-          rm -rf enterprise
-          rm -rf spec/enterprise
+      - name: Validate Salescom MIT-only boundary
+        run: bin/validate_salescom_oss
 
       - name: Create database
         run: bundle exec rake db:create

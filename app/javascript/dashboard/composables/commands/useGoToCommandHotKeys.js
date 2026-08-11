@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useMapGetter } from 'dashboard/composables/store';
 import { useRouter } from 'vue-router';
@@ -12,7 +12,6 @@ import {
   ICON_CLOCK_ALERT,
   ICON_CODE,
   ICON_CONTACT,
-  ICON_CREDIT_CARD,
   ICON_DATABASE,
   ICON_INBOX,
   ICON_LAYOUT_TEMPLATE,
@@ -20,7 +19,6 @@ import {
   ICON_MEGAPHONE,
   ICON_MESSAGE_CIRCLE,
   ICON_MESSAGE_QUOTE,
-  ICON_PHONE,
   ICON_REPEAT,
   ICON_SMILE,
   ICON_SQUARE_USER,
@@ -29,7 +27,6 @@ import {
   ICON_USERS,
   ICON_USER_PEN,
 } from 'dashboard/helper/commandbar/icons';
-import { isUpgradePageBypassRoute } from 'dashboard/helper/routeHelpers';
 
 const SECTION_GENERAL = 'COMMAND_BAR.SECTIONS.GENERAL';
 const SECTION_REPORTS = 'COMMAND_BAR.SECTIONS.REPORTS';
@@ -56,21 +53,6 @@ const GO_TO_COMMANDS = [
     section: SECTION_GENERAL,
     icon: ICON_CONTACT,
     routeName: 'contacts_dashboard_index',
-  },
-  {
-    id: 'goto_captain',
-    title: 'COMMAND_BAR.COMMANDS.GO_TO_CAPTAIN',
-    section: SECTION_GENERAL,
-    icon: ICON_BOT,
-    routeName: 'captain_assistants_index',
-    params: { navigationPath: 'captain_assistants_overview_index' },
-  },
-  {
-    id: 'goto_calls_dashboard',
-    title: 'COMMAND_BAR.COMMANDS.GO_TO_CALLS_DASHBOARD',
-    section: SECTION_GENERAL,
-    icon: ICON_PHONE,
-    routeName: 'calls_dashboard_index',
   },
   {
     id: 'goto_campaigns',
@@ -214,13 +196,6 @@ const GO_TO_COMMANDS = [
     routeName: 'canned_list',
   },
   {
-    id: 'open_sla_settings',
-    title: 'COMMAND_BAR.COMMANDS.GO_TO_SETTINGS_SLA',
-    section: SECTION_SETTINGS,
-    icon: ICON_CLOCK_ALERT,
-    routeName: 'sla_list',
-  },
-  {
     id: 'open_applications_settings',
     title: 'COMMAND_BAR.COMMANDS.GO_TO_SETTINGS_APPLICATIONS',
     section: SECTION_SETTINGS,
@@ -233,20 +208,6 @@ const GO_TO_COMMANDS = [
     section: SECTION_SETTINGS,
     icon: ICON_DATABASE,
     routeName: 'settings_data_imports',
-  },
-  {
-    id: 'open_audit_logs_settings',
-    title: 'COMMAND_BAR.COMMANDS.GO_TO_SETTINGS_AUDIT_LOGS',
-    section: SECTION_SETTINGS,
-    icon: ICON_BRIEFCASE,
-    routeName: 'auditlogs_list',
-  },
-  {
-    id: 'open_billing_settings',
-    title: 'COMMAND_BAR.COMMANDS.GO_TO_SETTINGS_BILLING',
-    section: SECTION_SETTINGS,
-    icon: ICON_CREDIT_CARD,
-    routeName: 'billing_settings_index',
   },
   {
     id: 'open_account_settings',
@@ -271,7 +232,7 @@ const GO_TO_COMMANDS = [
   },
 ];
 
-export function useGoToCommandHotKeys(isPaywalled = ref(false)) {
+export function useGoToCommandHotKeys() {
   const { t } = useI18n();
   const router = useRouter();
   const { checkPermissions, checkInstallationType, isFeatureFlagEnabled } =
@@ -294,7 +255,7 @@ export function useGoToCommandHotKeys(isPaywalled = ref(false)) {
     if (!checkPermissions(meta?.permissions)) return false;
     if (!checkInstallationType(meta?.installationTypes)) return false;
 
-    return !isPaywalled.value || isUpgradePageBypassRoute(route.name);
+    return true;
   };
 
   const goToCommandHotKeys = computed(() =>

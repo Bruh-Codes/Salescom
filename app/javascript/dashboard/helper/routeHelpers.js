@@ -67,12 +67,8 @@ export const validateLoggedInRoutes = (to, user) => {
     return validateActiveAccountRoutes(to, user);
   }
 
-  // If the current account is not active, only the suspended screen is
-  // reachable; administrators can also access billing to restore the account
-  const userPermissions = getUserPermissions(user, to.params.accountId);
-  const accessibleRoutes = userPermissions.includes('administrator')
-    ? ['account_suspended', 'billing_settings_index']
-    : ['account_suspended'];
+  // If the current account is not active, only the suspended screen is reachable.
+  const accessibleRoutes = ['account_suspended'];
 
   if (!accessibleRoutes.includes(to.name)) {
     return `accounts/${to.params.accountId}/suspended`;
@@ -150,11 +146,3 @@ export const isAInboxViewRoute = (routeName, includeBase = false) => {
 
 export const isNotificationRoute = routeName =>
   routeName === 'notifications_index';
-
-export const isUpgradePageBypassRoute = routeName =>
-  [
-    'billing_settings_index',
-    'settings_inbox_list',
-    'general_settings_index',
-    'agent_list',
-  ].includes(routeName);

@@ -1,31 +1,24 @@
 <script>
-import { defineAsyncComponent, ref, computed } from 'vue';
+import { defineAsyncComponent } from 'vue';
 
 import NextSidebar from 'next/sidebar/Sidebar.vue';
 import WootKeyShortcutModal from 'dashboard/components/widgets/modal/WootKeyShortcutModal.vue';
 import AddAccountModal from 'dashboard/components/app/AddAccountModal.vue';
-import UpgradePage from 'dashboard/routes/dashboard/upgrade/UpgradePage.vue';
 
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useWindowSize } from '@vueuse/core';
 
 import wootConstants from 'dashboard/constants/globals';
-import { isUpgradePageBypassRoute } from 'dashboard/helper/routeHelpers';
 
 const CommandBar = defineAsyncComponent(
   () => import('./commands/commandbar.vue')
-);
-
-const FloatingCallWidget = defineAsyncComponent(
-  () => import('dashboard/components-next/call/FloatingCallWidget.vue')
 );
 
 import CopilotLauncher from 'dashboard/components-next/copilot/CopilotLauncher.vue';
 import CopilotContainer from 'dashboard/components/copilot/CopilotContainer.vue';
 
 import MobileSidebarLauncher from 'dashboard/components-next/sidebar/MobileSidebarLauncher.vue';
-import { useCallsStore } from 'dashboard/stores/calls';
 
 export default {
   components: {
@@ -33,27 +26,20 @@ export default {
     CommandBar,
     WootKeyShortcutModal,
     AddAccountModal,
-    UpgradePage,
     CopilotLauncher,
     CopilotContainer,
-    FloatingCallWidget,
     MobileSidebarLauncher,
   },
   setup() {
-    const upgradePageRef = ref(null);
     const { uiSettings, updateUISettings } = useUISettings();
     const { accountId } = useAccount();
     const { width: windowWidth } = useWindowSize();
-    const callsStore = useCallsStore();
 
     return {
       uiSettings,
       updateUISettings,
       accountId,
-      upgradePageRef,
       windowWidth,
-      hasActiveCall: computed(() => callsStore.hasActiveCall),
-      hasIncomingCall: computed(() => callsStore.hasIncomingCall),
     };
   },
   data() {
@@ -67,15 +53,6 @@ export default {
   computed: {
     isSmallScreen() {
       return this.windowWidth < wootConstants.SMALL_SCREEN_BREAKPOINT;
-    },
-    showUpgradePage() {
-      return this.upgradePageRef?.shouldShowUpgradePage;
-    },
-    isAccountPaywalled() {
-      return this.upgradePageRef?.isAccountPaywalled;
-    },
-    bypassUpgradePage() {
-      return isUpgradePageBypassRoute(this.$route.name);
     },
     previouslyUsedDisplayType() {
       const {
@@ -142,27 +119,14 @@ export default {
     <main
       class="flex flex-1 h-full w-full min-h-0 px-0 overflow-hidden bg-n-surface-1"
     >
-      <UpgradePage
-        v-show="showUpgradePage"
-        ref="upgradePageRef"
-        :bypass-upgrade-page="bypassUpgradePage"
-      >
-        <MobileSidebarLauncher
-          :is-mobile-sidebar-open="isMobileSidebarOpen"
-          @toggle="toggleMobileSidebar"
-        />
-      </UpgradePage>
-      <template v-if="!showUpgradePage">
-        <router-view />
-        <CopilotLauncher />
-        <MobileSidebarLauncher
-          :is-mobile-sidebar-open="isMobileSidebarOpen"
-          @toggle="toggleMobileSidebar"
-        />
-        <CopilotContainer />
-        <FloatingCallWidget v-if="hasActiveCall || hasIncomingCall" />
-      </template>
-      <CommandBar :is-paywalled="isAccountPaywalled" />
+      <router-view />
+      <CopilotLauncher />
+      <MobileSidebarLauncher
+        :is-mobile-sidebar-open="isMobileSidebarOpen"
+        @toggle="toggleMobileSidebar"
+      />
+      <CopilotContainer />
+      <CommandBar />
       <AddAccountModal
         :show="showCreateAccountModal"
         @close-account-create-modal="closeCreateAccountModal"
