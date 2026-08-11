@@ -1058,7 +1058,7 @@ const menuItems = computed(() => {
       class="flex relative flex-col flex-shrink-0 gap-1 justify-between items-center"
     >
       <div
-        class="pointer-events-none absolute inset-x-0 -top-[1.938rem] h-8 bg-gradient-to-t from-n-background to-transparent"
+        class="pointer-events-none absolute inset-x-0 -top-[1.938rem] h-8 bg-gradient-to-t from-n-slate-3 dark:from-n-solid-2 to-transparent"
       />
       <SidebarChangelogCard
         v-if="
