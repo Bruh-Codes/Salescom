@@ -2,7 +2,6 @@
 import { h, ref, computed, onMounted, watch } from 'vue';
 import { provideSidebarContext, useSidebarResize } from './provider';
 import { useAccount } from 'dashboard/composables/useAccount';
-import { useConfig } from 'dashboard/composables/useConfig';
 import { useKbd } from 'dashboard/composables/utils/useKbd';
 import { useMapGetter } from 'dashboard/composables/store';
 import { useStore } from 'vuex';
@@ -44,14 +43,8 @@ const emit = defineEmits([
 ]);
 
 const { accountScopedRoute, isOnChatwootCloud } = useAccount();
-const { isEnterprise } = useConfig();
 const store = useStore();
 
-// Calls run on the enterprise-only API (cloud runs enterprise); hide the entry
-// on community so it doesn't lead to a dashboard/CTA the backend can't serve.
-const isCallsAvailable = computed(
-  () => isOnChatwootCloud.value || isEnterprise
-);
 const searchShortcut = useKbd([`$mod`, 'k']);
 const { t } = useI18n();
 
@@ -362,9 +355,9 @@ const reportRoutes = computed(() => newReportRoutes());
 const menuItems = computed(() => {
   return [
     {
-      name: 'Inbox',
-      label: t('SIDEBAR.INBOX'),
-      icon: 'i-lucide-inbox',
+      name: 'Notifications',
+      label: t('SIDEBAR.NOTIFICATIONS'),
+      icon: 'i-lucide-bell',
       to: accountScopedRoute('inbox_view'),
       activeOn: ['inbox_view', 'inbox_view_conversation'],
       getterKeys: {
