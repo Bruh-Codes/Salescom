@@ -12,9 +12,7 @@ module ChatwootApp
   end
 
   def self.enterprise?
-    return if ENV.fetch('DISABLE_ENTERPRISE', false)
-
-    @enterprise ||= root.join('enterprise').exist?
+    false
   end
 
   def self.chatwoot_cloud?
@@ -34,13 +32,7 @@ module ChatwootApp
   end
 
   def self.extensions
-    if custom?
-      %w[enterprise custom]
-    elsif enterprise?
-      %w[enterprise]
-    else
-      %w[]
-    end
+    %w[]
   end
 
   def self.advanced_search_allowed?

@@ -1,6 +1,5 @@
 import { useMapGetter, useStore } from 'dashboard/composables/store';
 import { usePolicy } from 'dashboard/composables/usePolicy';
-import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useGoToCommandHotKeys } from '../useGoToCommandHotKeys';
@@ -12,10 +11,6 @@ vi.mock('vue-router');
 vi.mock('dashboard/composables/usePolicy');
 
 const ROUTE_META = {
-  calls_dashboard_index: {
-    permissions: ['administrator', 'agent'],
-    installationTypes: ['cloud', 'enterprise'],
-  },
   portals_index: {
     featureFlag: MOCK_FEATURE_FLAGS.HELP_CENTER,
     permissions: ['administrator', 'knowledge_base_manage'],
@@ -197,26 +192,6 @@ describe('useGoToCommandHotKeys', () => {
     const ids = goToCommandHotKeys.value.map(cmd => cmd.id);
     expect(ids).not.toContain('open_reports_overview');
     expect(ids).not.toContain('open_agent_reports');
-  });
-
-  it('should drop commands whose route is not available on the installation', () => {
-    installationType = 'community';
-    const { goToCommandHotKeys } = useGoToCommandHotKeys();
-
-    expect(
-      goToCommandHotKeys.value.find(cmd => cmd.id === 'goto_calls_dashboard')
-    ).toBeUndefined();
-  });
-
-  it('should only keep routes that bypass the upgrade page when paywalled', () => {
-    const { goToCommandHotKeys } = useGoToCommandHotKeys(ref(true));
-
-    expect(goToCommandHotKeys.value.map(cmd => cmd.id).sort()).toEqual([
-      'open_account_settings',
-      'open_agent_settings',
-      'open_billing_settings',
-      'open_inbox_settings',
-    ]);
   });
 
   it('should translate section and title for each command', () => {

@@ -176,7 +176,6 @@ Rails.application.routes.draw do
               post :destroy_custom_attributes
               get :attachments
               get :inbox_assistant
-              get :reporting_events if ChatwootApp.enterprise?
             end
           end
 
@@ -226,7 +225,6 @@ Rails.application.routes.draw do
               resources :labels, only: [:create, :index]
               resources :notes
               get :attachments, to: 'attachments#index'
-              post :call, on: :member, to: 'calls#create' if ChatwootApp.enterprise?
             end
           end
           resources :data_imports, only: [:index, :show, :create] do
@@ -246,9 +244,6 @@ Rails.application.routes.draw do
               get :metrics
               get :download
             end
-            member do
-              patch :update if ChatwootApp.enterprise?
-            end
           end
           resources :applied_slas, only: [:index] do
             collection do
@@ -256,23 +251,6 @@ Rails.application.routes.draw do
               get :download
             end
           end
-          resources :reporting_events, only: [:index] if ChatwootApp.enterprise?
-
-          if ChatwootApp.enterprise?
-            resources :calls, only: [:index]
-            resources :whatsapp_calls, only: [:show] do
-              member do
-                post :accept
-                post :reject
-                post :terminate
-                post :upload_recording
-              end
-              collection do
-                post :initiate
-              end
-            end
-          end
-
           resources :custom_attribute_definitions, only: [:index, :show, :create, :update, :destroy]
           resources :custom_filters, only: [:index, :show, :create, :update, :destroy]
           resource :branded_email_layout, only: [:show, :update]
@@ -288,15 +266,6 @@ Rails.application.routes.draw do
             get :health, on: :member
             post :register_webhook, on: :member
             post :reset_secret, on: :member
-            if ChatwootApp.enterprise?
-              resource :conference, only: %i[create destroy], controller: 'conference' do
-                get :token, on: :member
-              end
-              post :enable_whatsapp_calling, on: :member
-              post :disable_whatsapp_calling, on: :member
-              post :set_inbound_calls, on: :member
-            end
-
             resource :csat_template, only: [:show, :create], controller: 'inbox_csat_templates' do
               post :analyze, on: :collection
             end
@@ -546,29 +515,6 @@ Rails.application.routes.draw do
     end
   end
 
-  if ChatwootApp.enterprise?
-    namespace :enterprise, defaults: { format: 'json' } do
-      namespace :api do
-        namespace :v1 do
-          resources :accounts do
-            member do
-              post :checkout
-              post :subscription
-              post :select_billing_currency
-              get :limits
-              post :toggle_deletion
-              post :topup_checkout
-              get :topup_options
-            end
-          end
-        end
-      end
-
-      post 'webhooks/stripe', to: 'webhooks/stripe#process_payload'
-      post 'webhooks/firecrawl', to: 'webhooks/firecrawl#process_payload'
-    end
-  end
-
   # ----------------------------------------------------------------------
   # Routes for platform APIs
   namespace :platform, defaults: { format: 'json' } do
@@ -672,13 +618,6 @@ Rails.application.routes.draw do
   namespace :twilio do
     resources :callback, only: [:create]
     resources :delivery_status, only: [:create]
-
-    if ChatwootApp.enterprise?
-      post 'voice/call/:phone', to: 'voice#call_twiml', as: :voice_call
-      post 'voice/status/:phone', to: 'voice#status', as: :voice_status
-      post 'voice/conference_status/:phone', to: 'voice#conference_status', as: :voice_conference_status
-      post 'voice/recording_status/:phone', to: 'voice#recording_status', as: :voice_recording_status
-    end
   end
 
   get 'microsoft/callback', to: 'microsoft/callbacks#show'
