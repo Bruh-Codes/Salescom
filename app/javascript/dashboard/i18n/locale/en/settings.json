@@ -580,6 +580,7 @@
   "BILLING_SETTINGS": {
     "TITLE": "Billing",
     "DESCRIPTION": "Manage your subscription here, upgrade your plan and get more for your team.",
+    "SUBSCRIBE": "Choose a plan",
     "CURRENT_PLAN": {
       "TITLE": "Current Plan",
       "PLAN_NOTE": "You are currently subscribed to the **{plan}** plan with **{quantity}** licenses",

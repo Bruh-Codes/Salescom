@@ -264,7 +264,7 @@
 - name: CHATWOOT_CLOUD_PLANS
   display_title: 'Cloud Plans'
   value:
-  description: 'Config to store stripe plans for cloud'
+  description: 'Config to store Dodo Payments plans for cloud'
 - name: CAPTAIN_TOPUP_OPTIONS
   display_title: 'Captain Topup Options'
   value: {}

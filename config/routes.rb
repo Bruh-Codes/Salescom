@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post '/webhooks/dodo_payments', to: 'webhooks/dodo_payments#create'
   # AUTH STARTS
   mount_devise_token_auth_for 'User', at: 'auth', controllers: {
     confirmations: 'devise_overrides/confirmations',
@@ -51,6 +52,10 @@ Rails.application.routes.draw do
         end
 
         scope module: :accounts do
+          resource :billing, only: [:show] do
+            post :checkout
+            post :portal
+          end
           namespace :actions do
             resource :contact_merge, only: [:create]
           end
