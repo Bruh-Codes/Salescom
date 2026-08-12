@@ -22,6 +22,7 @@ import teams from './teams/teams.routes';
 import profile from './profile/profile.routes';
 import conversationWorkflow from './conversationWorkflow/conversationWorkflow.routes';
 import data from './data/data.routes';
+import billing from './billing/billing.routes';
 
 export default {
   routes: [
@@ -43,6 +44,7 @@ export default {
       },
     },
     ...account.routes,
+    ...billing.routes,
     ...agent.routes,
     ...assignmentPolicy.routes,
     ...agentBot.routes,

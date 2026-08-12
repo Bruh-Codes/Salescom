@@ -580,6 +580,9 @@
   "BILLING_SETTINGS": {
     "TITLE": "Billing",
     "DESCRIPTION": "Manage your subscription here, upgrade your plan and get more for your team.",
+    "SUBSCRIBE": "Choose a plan",
+    "LOAD_ERROR": "Unable to load billing details. Please try again.",
+    "REDIRECT_ERROR": "Unable to open the billing page. Please try again.",
     "CURRENT_PLAN": {
       "TITLE": "Current Plan",
       "PLAN_NOTE": "You are currently subscribed to the **{plan}** plan with **{quantity}** licenses",
@@ -601,6 +604,7 @@
     "MANAGE_SUBSCRIPTION": {
       "TITLE": "Manage your subscription",
       "DESCRIPTION": "View your previous invoices, edit your billing details, or cancel your subscription.",
+      "STATUS": "Status",
       "BUTTON_TXT": "Go to the billing portal"
     },
     "CAPTAIN": {

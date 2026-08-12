@@ -485,17 +485,6 @@ const menuItems = computed(() => {
         },
       ],
     },
-    ...(isCallsAvailable.value
-      ? [
-          {
-            name: 'Calls',
-            label: t('SIDEBAR.CALLS'),
-            icon: 'i-lucide-phone',
-            to: accountScopedRoute('calls_dashboard_index'),
-            activeOn: ['calls_dashboard_index'],
-          },
-        ]
-      : []),
     {
       name: 'Contacts',
       label: t('SIDEBAR.CONTACTS'),
@@ -692,6 +681,12 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.ACCOUNT_SETTINGS'),
           icon: 'i-lucide-briefcase',
           to: accountScopedRoute('general_settings_index'),
+        },
+        {
+          name: 'Settings Billing',
+          label: t('SIDEBAR.BILLING'),
+          icon: 'i-lucide-credit-card',
+          to: accountScopedRoute('billing_settings_index'),
         },
         // {
         //   name: 'Settings Captain',

@@ -167,7 +167,7 @@ gem 'working_hours'
 gem 'pg_search'
 
 # Subscriptions, Billing
-gem 'stripe', '~> 18.0'
+gem 'dodopayments', '~> 2.23'
 
 ## - helper gems --##
 ## to populate db with sample data
