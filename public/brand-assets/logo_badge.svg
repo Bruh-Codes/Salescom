@@ -1,0 +1,5 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <image href="/brand-assets/logo_thumbnail.svg" width="512" height="512"/>
+  <circle cx="420" cy="92" r="72" fill="white"/>
+  <circle cx="420" cy="92" r="58" fill="#E11D48"/>
+</svg>

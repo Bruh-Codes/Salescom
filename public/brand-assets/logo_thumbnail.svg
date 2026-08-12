@@ -1,25 +1,11 @@
-<svg
-  width="16"
-  height="16"
-  viewBox="0 0 16 16"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <g clip-path="url(#woot-logo-clip-2342424e23u32098)">
-    <path
-      d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16Z"
-      fill="#2781F6"
-    />
-    <path
-      d="M11.4172 11.4172H7.70831C5.66383 11.4172 4 9.75328 4 7.70828C4 5.66394 5.66383 4 7.70835 4C9.75339 4 11.4172 5.66394 11.4172 7.70828V11.4172Z"
-      fill="white"
-      stroke="white"
-      stroke-width="0.1875"
-    />
-  </g>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <clipPath id="woot-logo-clip-2342424e23u32098">
-      <rect width="16" height="16" fill="white" />
-    </clipPath>
+    <linearGradient id="salescom-gradient" x1="82" y1="62" x2="430" y2="455" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5B21B6"/>
+      <stop offset="0.5" stop-color="#7C20D4"/>
+      <stop offset="1" stop-color="#5B21B6"/>
+    </linearGradient>
   </defs>
+  <rect x="48" y="48" width="416" height="416" rx="112" fill="url(#salescom-gradient)"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M256 122C181.994 122 122 176.621 122 244C122 307.858 175.89 360.968 246.486 365.922L234.311 389.054C231.61 394.186 236.28 400.009 241.874 398.484C328.925 374.743 390 316.5 390 244C390 176.621 330.006 122 256 122ZM213 268C224.046 268 233 259.046 233 248C233 236.954 224.046 228 213 228C201.954 228 193 236.954 193 248C193 259.046 201.954 268 213 268ZM319 248C319 259.046 310.046 268 299 268C287.954 268 279 259.046 279 248C279 236.954 287.954 228 299 228C310.046 228 319 236.954 319 248Z" fill="white"/>
 </svg>
