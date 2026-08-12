@@ -1,12 +1,15 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import axios from 'axios';
+import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import { useAlert } from 'dashboard/composables';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 
 const route = useRoute();
+const { t } = useI18n();
 const billing = ref({});
 const isLoading = ref(true);
 const isRedirecting = ref(false);
@@ -15,15 +18,26 @@ const endpoint = computed(
 );
 
 const loadBilling = async () => {
-  const { data } = await axios.get(endpoint.value);
-  billing.value = data;
-  isLoading.value = false;
+  try {
+    const { data } = await axios.get(endpoint.value);
+    billing.value = data;
+  } catch {
+    useAlert(t('BILLING_SETTINGS.LOAD_ERROR'));
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const redirectTo = async action => {
   isRedirecting.value = true;
-  const { data } = await axios.post(`${endpoint.value}/${action}`);
-  window.location.assign(data.redirect_url);
+
+  try {
+    const { data } = await axios.post(`${endpoint.value}/${action}`);
+    window.location.assign(data.redirect_url);
+  } catch {
+    isRedirecting.value = false;
+    useAlert(t('BILLING_SETTINGS.REDIRECT_ERROR'));
+  }
 };
 
 onMounted(loadBilling);
@@ -45,8 +59,15 @@ onMounted(loadBilling);
         <p class="mt-1 text-sm text-n-slate-11">
           {{ $t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.DESCRIPTION') }}
         </p>
-        <p v-if="billing.plan_name" class="mt-4 text-sm text-n-slate-12">
+        <p v-if="billing.plan_name" class="mt-4 text-sm font-medium text-n-slate-12">
           <strong>{{ billing.plan_name }}</strong>
+        </p>
+        <p
+          v-if="billing.subscription_status"
+          class="mt-1 text-sm text-n-slate-11"
+        >
+          {{ $t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.STATUS') }}:
+          {{ billing.subscription_status }}
         </p>
         <Button
           class="mt-5"

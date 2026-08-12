@@ -1,7 +1,9 @@
-class Webhooks::DodoPaymentsController < ActionController::Base
+class Webhooks::DodoPaymentsController < ActionController::API
   def create
     Billing::HandleDodoWebhookService.new(payload: request.raw_post, headers: webhook_headers).perform
     head :ok
+  rescue Billing::HandleDodoWebhookService::InvalidSignature
+    head :unauthorized
   end
 
   private

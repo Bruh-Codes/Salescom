@@ -3,7 +3,11 @@ class Api::V1::Accounts::BillingsController < Api::V1::Accounts::BaseController
 
   def show
     render json: Current.account.custom_attributes.slice(
-      'plan_name', 'dodo_customer_id', 'dodo_subscription_id', 'subscription_ends_on'
+      'plan_name',
+      'dodo_customer_id',
+      'dodo_subscription_id',
+      'subscription_ends_on',
+      'subscription_status'
     )
   end
 

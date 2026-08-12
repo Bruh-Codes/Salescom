@@ -7,7 +7,7 @@ class Billing::DodoPaymentsService
     session = DODO_PAYMENTS.checkout_sessions.create(
       product_cart: [{ product_id: ENV.fetch('DODO_PAYMENTS_PRODUCT_ID'), quantity: 1 }],
       customer: { email: billing_user.email, name: billing_user.name },
-      metadata: { account_id: @account.id },
+      metadata: { account_id: @account.id.to_s },
       return_url: billing_url
     )
     session.checkout_url
